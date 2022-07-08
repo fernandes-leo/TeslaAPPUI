@@ -13,6 +13,8 @@
 		F12BE5E628775317001B09A2 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12BE5E428775317001B09A2 /* LocationView.swift */; };
 		F12BE5E82877536B001B09A2 /* CommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12BE5E72877536B001B09A2 /* CommonComponents.swift */; };
 		F12BE5E92877536B001B09A2 /* CommonComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12BE5E72877536B001B09A2 /* CommonComponents.swift */; };
+		F15DBD4028786AEA00912531 /* ActionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15DBD3F28786AEA00912531 /* ActionComponents.swift */; };
+		F15DBD4128786AEA00912531 /* ActionComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15DBD3F28786AEA00912531 /* ActionComponents.swift */; };
 		F19A3B172874819C000C85DC /* TeslaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19A3B072874819B000C85DC /* TeslaApp.swift */; };
 		F19A3B182874819C000C85DC /* TeslaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19A3B072874819B000C85DC /* TeslaApp.swift */; };
 		F19A3B192874819C000C85DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19A3B082874819B000C85DC /* ContentView.swift */; };
@@ -25,6 +27,7 @@
 		F12BE5E128770DFE001B09A2 /* CarControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarControlsView.swift; sourceTree = "<group>"; };
 		F12BE5E428775317001B09A2 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		F12BE5E72877536B001B09A2 /* CommonComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonComponents.swift; sourceTree = "<group>"; };
+		F15DBD3F28786AEA00912531 /* ActionComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionComponents.swift; sourceTree = "<group>"; };
 		F19A3B072874819B000C85DC /* TeslaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeslaApp.swift; sourceTree = "<group>"; };
 		F19A3B082874819B000C85DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F19A3B092874819C000C85DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 				F12BE5E128770DFE001B09A2 /* CarControlsView.swift */,
 				F12BE5E428775317001B09A2 /* LocationView.swift */,
 				F12BE5E72877536B001B09A2 /* CommonComponents.swift */,
+				F15DBD3F28786AEA00912531 /* ActionComponents.swift */,
 				F19A3B092874819C000C85DC /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -191,6 +195,7 @@
 				F19A3B192874819C000C85DC /* ContentView.swift in Sources */,
 				F12BE5E528775317001B09A2 /* LocationView.swift in Sources */,
 				F12BE5E82877536B001B09A2 /* CommonComponents.swift in Sources */,
+				F15DBD4028786AEA00912531 /* ActionComponents.swift in Sources */,
 				F12BE5E228770DFE001B09A2 /* CarControlsView.swift in Sources */,
 				F19A3B172874819C000C85DC /* TeslaApp.swift in Sources */,
 			);
@@ -203,6 +208,7 @@
 				F19A3B1A2874819C000C85DC /* ContentView.swift in Sources */,
 				F12BE5E628775317001B09A2 /* LocationView.swift in Sources */,
 				F12BE5E92877536B001B09A2 /* CommonComponents.swift in Sources */,
+				F15DBD4128786AEA00912531 /* ActionComponents.swift in Sources */,
 				F12BE5E328770DFE001B09A2 /* CarControlsView.swift in Sources */,
 				F19A3B182874819C000C85DC /* TeslaApp.swift in Sources */,
 			);

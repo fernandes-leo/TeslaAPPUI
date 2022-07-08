@@ -8,6 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var openVoiceCommand = false
+    @State private var openMedia = false
+    @State private var openCharging = false
+    
+    @State private var actionText = ""
+    @State private var actionIcon = ""
+    @State private var openAction = false
+    
+    
+    
     var body: some View {
         NavigationView {
         ZStack {
@@ -15,11 +26,11 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                 HomeHeader()
                 CustomDivider()
-                CarSection()
+                    CarSection(openCharging: $openCharging)
                 CustomDivider()
-                CategoryView(title: "Quick Shortcuts", showEdit: true, actionItems: quickShortcuts)
+                CategoryView(openAction: $openAction, actionText: $actionText, actionIcon: $actionIcon, openCharging: $openCharging, openMedia: $openMedia, title: "Quick Shortcuts", showEdit: true, actionItems: quickShortcuts)
                 CustomDivider()
-                CategoryView(title: "Recent Actions", showEdit: true, actionItems: recentActions)
+                CategoryView (openAction: $openAction, actionText: $actionText, actionIcon: $actionIcon, openCharging: $openCharging, openMedia: $openMedia, title: "Recent Actions", actionItems: recentActions)
                 CustomDivider()
                 AllSettings()
                 ReorderButton()
@@ -29,7 +40,46 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            VoiceCommandButton()
+            VoiceCommandButton(open: $openVoiceCommand)
+            
+            if (openVoiceCommand || openCharging || openMedia || openAction) {
+                Color.black.opacity(0.5)
+                    .edgesIgnoringSafeArea(.all)
+                    .transition(.opacity)
+                    .onTapGesture {
+                        withAnimation {
+                            openVoiceCommand = false
+                            openCharging = false
+                            openMedia = false
+                            openAction = false
+                        }
+                    }
+            }
+                
+            
+            if openVoiceCommand {
+                VoiceCommandView(open: $openVoiceCommand, text: "Take me to Olive Garden")
+                    .zIndex(1)
+                    .transition(.move(edge: .bottom))
+            }
+            
+            if openCharging {
+                ChargingView()
+                    .zIndex(1)
+                    .transition(.move(edge: .bottom))
+            }
+            
+            if openMedia {
+                MediaPlayer()
+                    .zIndex(1)
+                    .transition(.move(edge: .bottom))
+            }
+            
+            if openAction && !actionText.isEmpty {
+                ActionNotification (open: $openAction, icon: actionIcon, text: actionText)
+                    .zIndex(1)
+                    .transition(.move(edge: .bottom))
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("DarkGray"))
@@ -45,19 +95,29 @@ struct ContentView: View {
 
 
 struct VoiceCommandButton: View {
+    
+    @Binding var open: Bool
+    
+    
     var body: some View {
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
-                    Image(systemName: "mic.fill")
-                        .font(.system(size: 24, weight: .semibold, design: .default))
-                        .frame(width: 64, height: 64)
-                        .background(Color("Green"))
-                        .foregroundColor(Color("DarkGray"))
-                        .clipShape(Circle())
-                        .padding()
-                        .shadow(radius:  10)
+                    Button(action: {
+                        withAnimation {
+                            open = true
+                        }
+                    }) {
+                        Image(systemName: "mic.fill")
+                            .font(.system(size: 24, weight: .semibold, design: .default))
+                            .frame(width: 64, height: 64)
+                            .background(Color("Green"))
+                            .foregroundColor(Color("DarkGray"))
+                            .clipShape(Circle())
+                            .padding()
+                            .shadow(radius:  10)
+                    }
                 }
             }
             .edgesIgnoringSafeArea(.all)
@@ -98,15 +158,24 @@ struct HomeHeader: View {
 
 
 struct CarSection: View {
+    
+    @Binding var openCharging: Bool
+    
     var body: some View {
         VStack(spacing: 10) {
             HStack(alignment: .center){
-                HStack{
-                    Image(systemName: "battery.75")
-                    Text("237 miles".uppercased())
+                
+                Button(action: {
+                    withAnimation {
+                        openCharging = true
+                    }
+                }) {
+                    Label("237 miles".uppercased(), systemImage: "battery.75")
+                    
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .foregroundColor(Color("Green"))
                 }
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
-                .foregroundColor(Color("Green"))
+                
                 Spacer()
                 VStack(alignment: .trailing){
                     Text("Parked")
@@ -149,6 +218,13 @@ struct CategoryHeader: View {
 
 struct CategoryView: View {
     
+    @Binding var openAction: Bool
+    @Binding var actionText: String
+    @Binding var actionIcon: String
+    
+    @Binding var openCharging: Bool
+    @Binding var openMedia: Bool
+        
     var title: String
     var showEdit: Bool = false
     
@@ -159,9 +235,29 @@ struct CategoryView: View {
             CategoryHeader(title: title, showEdit: showEdit)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top) {
+                    
+                    if title == "Quick Shortcuts" {
+                        
+                        Button(action: {withAnimation{openCharging = true }}) {
+                        ActionButton(item: chargingShortcut)
+                        }
+                        Button(action: {withAnimation{openMedia = true }}) {
+                        ActionButton(item: mediaShortcut)
+                        }
+                    }
+                    
                     ForEach(actionItems, id:\.self) {
                         item in
-                        ActionButton (item: item)
+                        Button(action: {
+                            withAnimation {
+                                openAction = true
+                                actionText = item.text
+                                actionIcon = item.icon
+                                
+                            }
+                        }) {
+                            ActionButton(item: item)
+                        }
                     }
                 }
             }
@@ -170,10 +266,12 @@ struct CategoryView: View {
 }
 
 let quickShortcuts: [ActionItem] = [
-    ActionItem(icon: "bolt.fill", text: "Charging"),
     ActionItem(icon: "fanblades.fill", text: "Fan On"),
-    ActionItem(icon: "music.note", text: "Media Controls"),
     ActionItem(icon: "bolt.car", text: "Close Charge Port")]
+
+let chargingShortcut = ActionItem(icon: "bolt.fill", text: "Charging")
+let mediaShortcut = ActionItem(icon: "music.note", text: "Media Controls")
+
 
 let recentActions: [ActionItem] = [
     ActionItem(icon: "arrow.up.square", text: "Open Trunk"),
